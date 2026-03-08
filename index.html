@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#007542" />
+  <title>AgroIrri CI</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  ÉCRAN 1 : ACCUEIL                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="ecran-accueil" class="ecran actif">
+    <div class="fond-degrade">
+      
+      <!-- Décoration : cercles flottants -->
+      <div class="cercle cercle-1"></div>
+      <div class="cercle cercle-2"></div>
+      <div class="cercle cercle-3"></div>
+
+      <div class="accueil-contenu">
+        <p class="bienvenue-texte">Bienvenue sur</p>
+        
+        <div class="logo-bloc">
+          <img src="icons/icon.svg" alt="Logo AgroIrri" class="logo-img" />
+          <h1 class="app-nom">AgroIrri CI</h1>
+        </div>
+
+        <p class="sous-titre">
+          Système intelligent d'aide à l'irrigation<br />
+          pour les agriculteurs de Côte d'Ivoire
+        </p>
+
+        <div class="info-champ">
+          <span class="info-icon">🌱</span>
+          <span>Culture de tomates · 200 m² · Yamoussoukro</span>
+        </div>
+
+        <button id="btn-analyser" class="btn-principal" onclick="demarrerAnalyse()">
+          <span class="btn-icon">🔍</span>
+          Analyser mon champ
+        </button>
+
+        <p class="astuce clickable" onclick="void(0)">Analyse basée sur la météo en temps réel</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  ÉCRAN 2 : CHARGEMENT                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="ecran-chargement" class="ecran">
+    <div class="fond-degrade">
+      <div class="cercle cercle-1"></div>
+      <div class="cercle cercle-2"></div>
+
+      <div class="chargement-contenu">
+        <div class="spinner-conteneur">
+          <div class="spinner"></div>
+          <img src="icons/icon.svg" alt="Logo" class="spinner-logo" />
+        </div>
+
+        <h2 class="chargement-titre">Analyse en cours...</h2>
+        
+        <div class="etapes-analyse">
+          <div class="etape" id="etape-1">
+            <span class="etape-dot"></span>
+            <span>Récupération météo Yamoussoukro</span>
+          </div>
+          <div class="etape" id="etape-2">
+            <span class="etape-dot"></span>
+            <span>Calcul évapotranspiration (FAO-56)</span>
+          </div>
+          <div class="etape" id="etape-3">
+            <span class="etape-dot"></span>
+            <span>Décision d'irrigation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chargement-footer">
+        <img src="icons/icon.svg" alt="Logo" class="footer-logo" />
+        <span class="footer-nom">AgroIrri CI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  ÉCRAN 3 : RÉSULTATS                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="ecran-resultat" class="ecran">
+    <div class="fond-degrade">
+      <div class="cercle cercle-1"></div>
+
+      <div class="resultat-contenu">
+        
+        <!-- Header -->
+        <div class="resultat-header">
+          <button class="btn-retour" onclick="retourAccueil()">
+            ← Accueil
+          </button>
+          <img src="icons/icon.svg" alt="Logo" class="resultat-logo" />
+        </div>
+
+        <!-- Titre réponse -->
+        <div class="reponse-titre-bloc">
+          <span class="reponse-chevron">‹</span>
+          <span class="reponse-titre">RÉPONSE</span>
+          <span class="reponse-chevron">›</span>
+        </div>
+
+        <!-- Carte de décision principale -->
+        <div class="carte-decision" id="carte-decision">
+          
+          <div class="decision-principale" id="decision-affichage">
+            <div class="decision-icone" id="decision-icone">💧</div>
+            <div class="decision-texte" id="decision-texte">OUI, irriguer</div>
+            <div class="decision-volume" id="decision-volume">Volume : -- L</div>
+          </div>
+
+          <div class="separateur"></div>
+
+          <!-- Données météo -->
+          <div class="donnees-grille">
+            <div class="donnee-item">
+              <span class="donnee-icone">💧</span>
+              <span class="donnee-label">Humidité sol</span>
+              <span class="donnee-valeur" id="val-humidite">--%</span>
+            </div>
+            <div class="donnee-item">
+              <span class="donnee-icone">🌧️</span>
+              <span class="donnee-label">Pluie prévue</span>
+              <span class="donnee-valeur" id="val-pluie">-- mm</span>
+            </div>
+            <div class="donnee-item">
+              <span class="donnee-icone">🌡️</span>
+              <span class="donnee-label">Température</span>
+              <span class="donnee-valeur" id="val-temp">--°C</span>
+            </div>
+            <div class="donnee-item">
+              <span class="donnee-icone">🌬️</span>
+              <span class="donnee-label">ET₀ (FAO-56)</span>
+              <span class="donnee-valeur" id="val-et0">-- mm</span>
+            </div>
+          </div>
+
+          <div class="separateur"></div>
+
+          <!-- Prévisions 3 jours -->
+          <div class="previsions-titre">Prévisions 3 jours</div>
+          <div class="previsions-grille" id="previsions-grille">
+            <!-- Rempli par app.js -->
+          </div>
+
+        </div>
+
+        <!-- Date de l'analyse -->
+        <p class="analyse-date" id="analyse-date">--</p>
+
+        <!-- Bouton nouvelle analyse -->
+        <button class="btn-secondaire" onclick="demarrerAnalyse()">
+          🔄 Nouvelle analyse
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Message d'erreur (hors ligne) -->
+  <div id="message-erreur" class="message-erreur cache">
+    <div class="erreur-contenu">
+      <div class="erreur-icone">📡</div>
+      <h3>Connexion requise</h3>
+      <p>Lance l'app une première fois avec internet pour activer le mode hors-ligne.</p>
+      <button onclick="cacherErreur()" class="btn-secondaire">OK</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

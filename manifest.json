@@ -1,0 +1,19 @@
+{
+  "name": "AgroIrri CI",
+  "short_name": "AgroIrri",
+  "description": "Système intelligent d'aide à l'irrigation pour les agriculteurs de Côte d'Ivoire",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#007542",
+  "theme_color": "#007542",
+  "orientation": "portrait",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
